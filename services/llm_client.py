@@ -22,13 +22,17 @@ class LLMClient:
         self.model = model_name
         self.temperature = temperature
 
-    def generate_questions(self, topic: str, num_questions: int = 5) -> QuestionStore:
+    def generate_questions(
+        self, topic: str, difficulty: str, num_questions: int = 5
+    ) -> QuestionStore:
         """Generate quiz questions based on a given topic.
 
         Parameters
         ----------
         topic : str
             The topic for which to generate questions.
+        difficulty : str
+            The difficulty level of the questions.
         num_questions : int
             The number of questions to generate.
 
@@ -39,8 +43,9 @@ class LLMClient:
         """
 
         prompt = (
-            f"Genera exactamente '{num_questions}' preguntas "
-            f'de opción múltiple sobre el tema "{topic}", en español.'
+            f'Genera exactamente "{num_questions}" preguntas '
+            f'de opción múltiple sobre el tema "{topic}", en español, '
+            f'con un nivel de dificultad "{difficulty}".'
         )
 
         response = self.client.chat.completions.parse(
